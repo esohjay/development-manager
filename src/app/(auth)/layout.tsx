@@ -1,0 +1,1 @@
+export default function AuthLayout({children}:{children:React.ReactNode}){return <main style={{minHeight:"100dvh",display:"grid",placeItems:"center",padding:"1rem",background:"linear-gradient(145deg,#eef5f0,#fbfcfa 55%)"}}>{children}</main>}
