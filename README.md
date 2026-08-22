@@ -1,4 +1,4 @@
-# Northstar
+# SojiTracker
 
 A mobile-first personal goal execution app built with Next.js App Router, TypeScript, MongoDB, Zod, and BetterAuth.
 
