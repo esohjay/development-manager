@@ -4,10 +4,11 @@ import { requireUser } from "@/lib/session";
 import { taskOptions } from "@/lib/data";
 import { LogoutButton } from "@/components/logout-button";
 import { QuickTask } from "@/components/quick-task";
+import { ContextBackButton } from "@/components/back-button";
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const user = await requireUser();
   const options = await taskOptions(user.id);
   const clientOptions = JSON.parse(JSON.stringify(options));
-  return <div className="app-shell"><aside className="sidebar"><Link href="/today" className="brand">SojiTracker</Link><nav><Link href="/today"><Compass/>Today</Link><Link href="/week"><CalendarDays/>Week</Link><Link href="/goals"><Target/>Goals</Link><Link href="/bulk-upload"><FileUp/>Bulk upload</Link></nav><div className="sidebar-foot"><span className="muted" style={{ fontSize: 13, overflow: "hidden", textOverflow: "ellipsis" }}>{user.email}</span><LogoutButton/></div></aside><header className="mobile-head"><Link href="/today" className="brand">SojiTracker</Link><LogoutButton/></header><main className="main-content">{children}</main><nav className="bottom-nav"><Link href="/today"><Compass/><span>Today</span></Link><Link href="/week"><CalendarDays/><span>Week</span></Link><span/><Link href="/goals"><Target/><span>Goals</span></Link><Link href="/bulk-upload"><FileUp/><span>Upload</span></Link></nav><QuickTask {...clientOptions}/></div>;
+  return <div className="app-shell"><aside className="sidebar"><Link href="/today" className="brand">SojiTracker</Link><nav><Link href="/today"><Compass/>Today</Link><Link href="/week"><CalendarDays/>Week</Link><Link href="/goals"><Target/>Goals</Link><Link href="/bulk-upload"><FileUp/>Bulk upload</Link></nav><div className="sidebar-foot"><span className="muted" style={{ fontSize: 13, overflow: "hidden", textOverflow: "ellipsis" }}>{user.email}</span><LogoutButton/></div></aside><header className="mobile-head"><Link href="/today" className="brand">SojiTracker</Link><LogoutButton/></header><main className="main-content"><ContextBackButton/>{children}</main><nav className="bottom-nav"><Link href="/today"><Compass/><span>Today</span></Link><Link href="/week"><CalendarDays/><span>Week</span></Link><span/><Link href="/goals"><Target/><span>Goals</span></Link><Link href="/bulk-upload"><FileUp/><span>Upload</span></Link></nav><QuickTask {...clientOptions}/></div>;
 }

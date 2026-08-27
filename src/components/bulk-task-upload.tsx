@@ -2,10 +2,11 @@
 
 import { useActionState, useMemo, useState } from "react";
 import { FileJson, Upload } from "lucide-react";
-import { bulkImportTasks, initialBulkImportState } from "@/app/bulk-actions";
+import { bulkImportTasks, type BulkImportState } from "@/app/bulk-actions";
 
 type Option = { id: string; title: string };
 const example = JSON.stringify([{ title: "Example task", scheduledDate: "2026-08-28", dueDate: "2026-08-30", priority: "high", tags: ["example", "planning"] }], null, 2);
+const initialBulkImportState: BulkImportState = { status: "idle", message: "" };
 
 export function BulkTaskUpload({ goals, focusPeriods, outcomes }: { goals: Option[]; focusPeriods: Option[]; outcomes: Option[] }) {
   const [json, setJson] = useState(example);
@@ -31,6 +32,7 @@ export function BulkTaskUpload({ goals, focusPeriods, outcomes }: { goals: Optio
       <div><p className="eyebrow" style={{ margin: 0 }}>Step 1</p><h2 style={{ margin: ".3rem 0" }}>Choose relationships</h2><p className="muted" style={{ margin: 0, fontSize: 14 }}>These selections will be applied to every task in this upload.</p></div>
       <fieldset style={{ border: 0, padding: 0 }}><legend className="label">Goals (optional, select any that apply)</legend><div className="relation-grid">{goals.length ? goals.map((goal) => <label key={goal.id} className="check-option"><input type="checkbox" name="goalIds" value={goal.id}/><span>{goal.title}</span></label>) : <span className="muted">Create a goal first if you want linked tasks.</span>}</div></fieldset>
       <div className="form-grid two"><label><span className="label">Focus period (optional)</span><select className="input" name="focusPeriodId"><option value="">None</option>{focusPeriods.map((focus) => <option value={focus.id} key={focus.id}>{focus.title}</option>)}</select></label><label><span className="label">Outcome or milestone (optional)</span><select className="input" name="outcomeId"><option value="">None</option>{outcomes.map((outcome) => <option value={outcome.id} key={outcome.id}>{outcome.title}</option>)}</select></label></div>
+      <label className="commit-option"><input type="checkbox" name="commitToWeeks" value="true" defaultChecked/><span><strong>Add tasks to weekly plans</strong><small>Uses each task’s scheduled date to place it in the correct Monday–Sunday plan. Missing plans will be created.</small></span></label>
     </section>
     <section className="card stack">
       <div><p className="eyebrow" style={{ margin: 0 }}>Step 2</p><h2 style={{ margin: ".3rem 0" }}>Add task JSON</h2></div>
